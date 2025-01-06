@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RegistrationModel } from '../models/registration-model';
+import { RegistrationModel } from '../models/product-model';
 
 @Component({
   selector: 'app-team',
@@ -20,7 +20,7 @@ export class TeamComponent {
   }
 
   save() {
-    //TODO: kötelező mezők ellenőrzése....   
+    //TODO: kötelező mezők ellenőrzése....
 
     this.saved.emit(this.model);
   }

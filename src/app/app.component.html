@@ -1,30 +1,30 @@
 <div class="container">
-  <h1 class="text-center mb-3">WRO csapat regisztráció</h1>
+  <h1 class="text-center mb-3">Termékek</h1>
   <table class="table table-hover table-bordered">
       <tr class="text-center">
           <th>
               <span (click)="newReg()">&#10010;</span>
           </th>
-          <th>Csapatnév</th>
+          <th>Terméknév</th>
+          <th>Ár</th>
           <th>Kategória</th>
-          <th>Csapattagok száma</th>
-          <th>Csapatvezető neve</th>
-          <th>Csap. vez. e-mail</th>
-          <th>Csap. vez. szüldátum</th>
+          <th>Raktáros</th>
+          <th>Leírás</th>
       </tr>
-      @for (reg of registrations; track $index) {
+
+      @for (product of products; track $index) {
         <tr>
             <td>
-                <span (click)="modifyReg(reg)">&#9998;</span>
-                <span (click)="deleteReg(reg)">&#10008;</span>
+                <span (click)="modifyProduct(product)">&#9998;</span>
+                <span (click)="deleteProduct(product)">&#10008;</span>
             </td>
-            <td>{{reg.teamName}}</td>
-            <td>{{reg.category}}</td>
-            <td>{{reg.memberCount}}</td>
-            <td>{{reg.teamLeader}}</td>
-            <td>{{reg.teamLeaderEmail}}</td>
-            <td>{{reg.teamLeaderBirthDate}}</td>
-        </tr>      
+            <td>{{product.teamName}}</td>
+            <td>{{product.category}}</td>
+            <td>{{product.memberCount}}</td>
+            <td>{{product.teamLeader}}</td>
+            <td>{{product.teamLeaderEmail}}</td>
+            <td>{{product.teamLeaderBirthDate}}</td>
+        </tr>
       }
   </table>
 </div>

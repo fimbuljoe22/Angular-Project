@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegistrationModel } from '../app/models/registration-model';
+import { ProductModel } from '../app/models/product-model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,22 +12,19 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getRegistrations(): Observable<RegistrationModel[]> {
-    return this.http.get<RegistrationModel[]>(this.url);
+  getProducts(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.url);
   }
 
-  addRegistration(reg: RegistrationModel): Observable<RegistrationModel> {
-    return this.http.post<RegistrationModel>(this.url, reg);
+  addProduct(reg: ProductModel): Observable<ProductModel> {
+    return this.http.post<ProductModel>(this.url, reg);
   }
 
-  modifyRegistration(reg: RegistrationModel): Observable<RegistrationModel> {
-    return this.http.put<RegistrationModel>(`${this.url}/${reg.id}`, reg);
+  modifyProduct(reg: ProductModel): Observable<ProductModel> {
+    return this.http.put<ProductModel>(`${this.url}/${reg.id}`, reg);
   }
 
-  deleteRegistration(reg: RegistrationModel): Observable<RegistrationModel> {
-    return this.http.delete<RegistrationModel>(`${this.url}/${reg.id}`);
+  deleteProduct(reg: ProductModel): Observable<ProductModel> {
+    return this.http.delete<ProductModel>(`${this.url}/${reg.id}`);
   }
-
-
-
 }

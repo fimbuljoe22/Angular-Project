@@ -1,78 +1,88 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { RegistrationModel } from './models/registration-model';
+import { ProductModel } from './models/product-model';
 import { DataService } from '../services/data.service';
-import { TeamComponent } from "./team/team.component";
+import { ProductComponent } from "./product/product.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, TeamComponent],
+  imports: [RouterOutlet, ProductComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  registrations: RegistrationModel[] = [];
-  modify: RegistrationModel | undefined = undefined;
-  new: RegistrationModel | undefined = undefined;
+  products:ProductModel[]=[];
 
-  constructor(private dataService: DataService) {}
+  modify: ProductModel |undefined=undefined;
+  new: ProductModel |undefined=undefined;
 
-  ngOnInit() {
-    this.dataService.getRegistrations().subscribe({
-      next: (data: RegistrationModel[]) => {
-        this.registrations = data;
-      },
-      error: (err) => console.log(err)
 
+  constructor(private dataService: DataService){ }
+
+  ngOnInit(){
+    this.dataService.getProducts().subscribe({
+      next: (data: ProductModel[]) => {this.products = data;},
+
+      error: (err) =>console.log(err)
     });
   }
 
-  newReg() {
-    this.new = {
-      id: undefined,
-      teamName: '',
-      category: '',
-      memberCount: 2,
-      teamLeader: '',
-      teamLeaderEmail: '',
-      teamLeaderBirthDate: ''
-    }
+
+  newProduct(){
+    this.new={
+      id:undefined,
+      name:"",
+      price:1,
+      category:"",
+      stock:1,
+      description:""
+    };
   }
 
-  saveNew(reg: RegistrationModel) {
-    this.dataService.addRegistration(reg).subscribe({
-      next: (data: RegistrationModel) => {
-        this.registrations.push(data);
+  saveNew(prod:ProductModel){
+    this.dataService.addProduct(product).subscribe({
+      next: (data: ProductModel) => {
+        const index = this.products.findIndex((p) => p.id === data.id);
+        this.products.push(data);
         this.new = undefined;
+
       },
+
       error: (err) => console.log(err)
-    });
+    })
   }
 
-  modifyReg(reg: RegistrationModel) {
-    this.modify = JSON.parse(JSON.stringify(reg));
+  modifyProduct(prod: ProductModel)
+  {
+    this.modify=JSON.parse(JSON.stringify(product));
   }
 
-  saveModify(reg: RegistrationModel) {
-    this.dataService.modifyRegistration(reg).subscribe({
-      next: (data: RegistrationModel) => {
-        const index = this.registrations.findIndex(r => r.id == data.id);
-        this.registrations[index] = data;
+  saveModify(prod:ProductModel)
+  {
+    this.dataService.modifyProduct(product).subscribe({
+      next: (data: ProductModel) => {
+        const index = this.products.findIndex((p) => p.id === data.id);
+        this.products[index] = data;
+        this.modify = undefined;
+
+      },
+
+      error: (err) => console.log(err)
+    })
+  }
+
+  deleteProduct(prod:ProductModel){
+    this.dataService.deleteProduct(product).subscribe({
+      next: (data: ProductModel) => {
+        const index = this.products.findIndex((p) => p.id === data.id);
+        this.products.splice(index, 1);
         this.modify = undefined;
       },
+
       error: (err) => console.log(err)
-    });
+    })
   }
 
-  deleteReg(reg: RegistrationModel) {
-    this.dataService.deleteRegistration(reg).subscribe({
-      next: (data: RegistrationModel) => {
-        const index = this.registrations.findIndex(r => r.id == data.id);
-        this.registrations.splice(index, 1);
-      },
-      error: (err) => console.log(err)
-    });
-  }
 
 
 }
